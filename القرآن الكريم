@@ -1,0 +1,23 @@
+function toggleCompletion(circle, quarterId) {
+  circle.classList.toggle('completed');
+  
+  let completedQuarters = JSON.parse(localStorage.getItem('completedQuarters')) || [];
+  if (circle.classList.contains('completed')) {
+    completedQuarters.push(quarterId);
+  } else {
+    completedQuarters = completedQuarters.filter(id => id !== quarterId);
+  }
+  localStorage.setItem('completedQuarters', JSON.stringify(completedQuarters));
+}
+
+// استرجاع التقدم عند فتح الموقع
+function loadCompletedQuarters() {
+  const completedQuarters = JSON.parse(localStorage.getItem('completedQuarters')) || [];
+  document.querySelectorAll('.circle').forEach((circle, index) => {
+    if (completedQuarters.includes(index + 1)) {
+      circle.classList.add('completed');
+    }
+  });
+}
+
+window.onload = loadCompletedQuarters;
